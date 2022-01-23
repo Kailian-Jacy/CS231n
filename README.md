@@ -13,3 +13,15 @@ CV 入门课 CS231n assignment.
 ## Suggestions
 
 ..To be updated.
+
+### Assignment1
+
+写了快两天，时间主要花在：
+- numpy查资料和解决corner case
+- debug。尤其是在不知道结果是否正确的部分。
+
+建议：
+- 打草稿、列出足够的细节，然后动手写代码。在写之前、构思解法的时候先熟悉函数。
+- 检查入参。至少在使用的时候先熟悉入参。
+- 在前期解决的时候设计debug点。
+- numpy降低错误率的重要手段是关注shape。时刻print shape来防止错误浪费时间。
