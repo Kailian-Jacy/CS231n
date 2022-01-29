@@ -66,6 +66,13 @@ class LinearClassifier(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
+            bag_patch_idx = np.random.choice(num_train, batch_size, replace=True)
+            X_batch = X[bag_patch_idx]
+            y_batch = y[bag_patch_idx]
+
+            # print(X_batch.shape)
+            # print(y_batch.shape)
+
             pass
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -81,6 +88,7 @@ class LinearClassifier(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
+            self.W -= grad * learning_rate
             pass
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -110,6 +118,12 @@ class LinearClassifier(object):
         # Implement this method. Store the predicted labels in y_pred.            #
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+
+        # dX = np.hstack((X, np.ones((X.shape[0], 1))))
+        # print(X.shape)
+        # print(self.W.shape)
+        y_pred = np.argmax(X.dot(self.W), axis = 1)
+        # print(y_pred.shape)
 
         pass
 

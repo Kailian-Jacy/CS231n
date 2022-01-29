@@ -10,7 +10,19 @@ CV 入门课 CS231n assignment.
 
 - Assignment: https://cs231n.github.io
 
-## Suggestions
+## Discussion
+
+一些拓展话题和补充资料
+
+### How to tune learning rate?
+
+补充资料: 
+
+- 入门概述: https://zhuanlan.zhihu.com/p/31424275
+- 论文概述: https://towardsdatascience.com/estimating-optimal-learning-rate-for-a-deep-neural-network-ce32f2556ce0
+- 论文原文: https://arxiv.org/abs/1506.01186
+
+## Assignment and Conclusion
 
 - 应当为这类实现引入全新的数学系统。将习惯的加减乘除运算，扩展为以矩阵为核心的、以numpy函数为基本方式的数学运算。“numpy就是数学”。习惯推导大于实现的方式。
 	- 引入辅助系统：计算图等。

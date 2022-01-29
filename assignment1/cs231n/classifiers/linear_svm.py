@@ -89,7 +89,7 @@ def svm_loss_vectorized(W, X, y, reg):
     scores = X.dot(W)
     # print(scores.shape)
 
-    margin = np.maximum(scores - scores[range(num_samples), y].reshape(500,1) + 1, 0)
+    margin = np.maximum(scores - scores[range(num_samples), y].reshape(num_samples,1) + 1, 0)
     margin[range(num_samples), y] = 0
     # print(scores.shape)
 
@@ -115,7 +115,7 @@ def svm_loss_vectorized(W, X, y, reg):
     X_effect[range(num_samples), y] -= np.sum(X_effect, axis=1)   # 每个样本i在y[i]的类上产生sigma(margin gt 0)*X[i]（除y[i]的margin）的梯度
 
     dW = X.T.dot(X_effect) * 1.0 / num_samples
-    print(dW.shape)
+    # print(dW.shape)
 
     dW += reg * W * 2
     pass
