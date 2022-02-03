@@ -73,6 +73,15 @@ class FullyConnectedNet(object):
         # parameters should be initialized to zeros.                               #
         ############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+        hidden_dims.append(num_classes)
+        for idx, size in enumerate(hidden_dims):
+            # Index Align: Layer: idx + 1; W[idx+1]; hidden_dims[idx-1]
+            if idx == 0:
+                self.params["W"+str(1)] = np.random.randn(input_dim, size) * weight_scale
+            else:
+                self.params["W"+str(idx+1)] = np.random.randn(hidden_dims[idx-1], size) * weight_scale
+            self.params["b"+str(idx+1)] = np.zeros(size)
+        # hidden_dims.pop()
 
         pass
 
@@ -147,8 +156,16 @@ class FullyConnectedNet(object):
         # layer, etc.                                                              #
         ############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-        pass
+        self.scores=[]
+        self.scores.append(X)
+        for idx in range(self.num_layers):
+            # Layer = idx + 1
+            next_score = self.scores[idx].dot(self.params["W"+str(idx+1)]) + self.params["b"+str(idx+1)]
+            self.scores.append(np.maximum(next_score, 0)) # ReLu
+        # final layer with loss. num_layers + 1 in total.
+        self.scores.append(softmax_loss(self.scores[-1], y)[0])
+        scores = self.scores[-1]
+        # pass
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         ############################################################################
@@ -174,6 +191,26 @@ class FullyConnectedNet(object):
         # of 0.5 to simplify the expression for the gradient.                      #
         ############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+
+        # Calculate the last layer (softmax) gradient separately.
+        loss, ds_next_layer = softmax_loss(self.scores[-2], y)
+
+        for idx in range(self.num_layers, 0, -1):
+            # layer = idx.
+            if idx != self.num_layers:
+                Relu_mask = self.scores[idx].copy()
+                Relu_mask[Relu_mask>0] = 1
+                ds_next_layer *= Relu_mask
+
+            # calculate W and b
+            grads["W"+str(idx)] = self.scores[idx-1].T.dot(ds_next_layer) + self.reg * 2 * self.params["W"+str(idx)]
+            grads["b"+str(idx)] = np.sum(ds_next_layer, axis = 0) + self.reg * 2 * self.params["b"+str(idx)]
+
+            # Add regularization for loss
+            loss += self.reg * np.sum(self.params["W"+str(idx)] * self.params["W"+str(idx)])
+
+            # Update ds_next_layer
+            ds_next_layer = ds_next_layer.dot(self.params["W"+str(idx)].T)
 
         pass
 

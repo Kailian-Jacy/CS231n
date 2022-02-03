@@ -137,7 +137,24 @@ def softmax_loss(x, y):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    num_train = x.shape[0]
+    num_classes = x.shape[1]
+
+    # loss
+    S = x
+    Exp_s = np.exp( (S.T - np.max(S, axis=1)).T )
+    Soft_S = Exp_s / np.sum(Exp_s, axis=1).reshape(-1,1)
+    loss = np.sum(-np.log(Soft_S[range(num_train), y])) / num_train
+
+    # gradient
+    dL = np.array([1/num_train]*num_train)
+    yS = np.zeros_like(Soft_S)
+    yS[range(num_train), y] = 1.0
+    dx = ( Soft_S - yS ) / num_train
+
+    # dx /= num_train
+
+    # pass
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################

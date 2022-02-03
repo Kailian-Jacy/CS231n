@@ -2,4 +2,7 @@
 .DS_Store
 
 # datasets
-assignment1/cs231n/datasets/
+**/datasets
+
+# cache 
+**/__pycache__
